@@ -1,0 +1,18 @@
+#!/bin/bash
+centreon -u <%= @username %> -p <%= @password %> -o HOST -a ADD -v "<%= @hostname %>;<%= @alias %>;<%= @address %>;<%= @template %>;<%= @poller_name %>;"
+centreon -u <%= @username %> -p <%= @password %> -o HOST -a setparam -v "<%= @hostname %>;alias;<%= @alias %>"
+centreon -u <%= @username %> -p <%= @password %> -o HOST -a setparam -v "<%= @hostname %>;address;<%= @ipaddress %>"
+centreon -u <%= @username %> -p <%= @password %> -o HOST -a setparam -v "<%= @hostname %>;icon_image;<%= @icon_image %>"
+<% if @check_period -%>
+centreon -u <%= @username %> -p <%= @password %> -o HOST -a setparam -v "<%= @hostname %>;check_period;<%= @check_period %>"
+<% end -%>
+<% if @snmp_community -%>
+centreon -u <%= @username %> -p <%= @password %> -o HOST -a setparam -v "<%= @hostname %>;snmp_community;<%= @snmp_community %>"
+<% end %>
+<% if @snmp_version -%>
+centreon -u <%= @username %> -p <%= @password %> -o HOST -a setparam -v "<%= @hostname %>;snmp_version;<%= @snmp_version %>"
+<% end %>
+centreon -u <%= @username %> -p <%= @password %> -o HOST -a setparam -v "<%= @hostname %>;statusmap_image;<%= @statusmap_image %>"
+<% if @addhostgroup %>
+centreon -u <%= @username %> -p <%= @password %> -o HOST -a addhostgroup -v "<%= @hostname %>;<%= @addhostgroup %>"
+<% end %>

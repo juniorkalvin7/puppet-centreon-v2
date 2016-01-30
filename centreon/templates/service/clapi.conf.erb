@@ -1,0 +1,8 @@
+#!/bin/bash
+<% if @interfaces.split(',').each do |i| -%>
+centreon -u <%= @username %> -p <%= @password %> -o SERVICE -a add -v "<%= @hostname %>;Network-<%= i %>;SNMP-Linux-Network-<%= i %>"
+centreon -u <%= @username %> -p <%= @password %> -o SERVICE -a setparam -v "<%= @hostname %>;Network-<%= i %>;SNMP-Linux-Network-<%= i %>"
+centreon -u <%= @username %> -p <%= @password %> -o SERVICE -a setparam -v "<%= @hostname %>;Network-<%= i %>;check_command;<% if i == 'lo' %>check_centreon_traffic<% else %>check_traffic_v3_sincrono<% end %>
+<% if i == 'lo' -%><% else %>SERVICE;setparam;<%= @hostname %>;Network-<%= i %>;check_command_arguments;!<%= i %>!80!90!$USER2$!m!10!1
+<% end 
+<% end -%>
