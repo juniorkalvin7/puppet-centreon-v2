@@ -18,7 +18,7 @@ class centreon::client::host (
 
 	@@file { $::hostname:
 	ensure  => present,
-	path    => "$centreon::cdir/$::hostname",
+	path    => "$centreon::cdirs/$::hostname",
 	content => template("centreon/host/clapi.conf.erb"),
 	mode    => 775,
 	tag     => "host_clapi",
